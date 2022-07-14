@@ -18,20 +18,20 @@
 {{-- Page Css files --}}
 <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/forms/form-validation.css')) }}">
 <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/extensions/ext-component-toastr.css')) }}">
-<link rel="stylesheet" href="{{asset(mix('css/base/plugins/extensions/ext-component-sweet-alerts.css'))}}">
+<link rel="stylesheet" href="{{ asset(mix('css/base/plugins/extensions/ext-component-sweet-alerts.css')) }}">
 @endsection
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 
 @section('content')
-<!-- Loket start -->
+<!-- Konsultasi Start -->
 <!-- list and filter start -->
 <div class="card">
     <div class="card-body border-bottom">
         <h4 class="card-title">List Data</h4>
         <div class="button">
             <button class="add-new btn btn-primary" data-bs-toggle="modal" data-bs-target='#exampleModalScrollable'>
-                <i data-feather="plus-circle" class="me-25"></i>
-                <span>Tambah Data</span>
+                <i data-feather="monitor" class="me-25"></i>
+                <span>Daftar</span>
             </button>
         </div>
     </div>
@@ -45,10 +45,11 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Aksi</th>
-                                    <th>ID</th>
-                                    <th>Nama</th>
+                                    <th>No. KTP</th>
+                                    <th>Nama Pasien</th>
+                                    <th>Tanggal Berobat</th>
                                     <th>Poliklinik</th>
+                                    <th>Nomor Antrian</th>
                                 </tr>
                             </thead>
                         </table>
@@ -61,64 +62,42 @@
 </div>
 <!-- list and filter end -->
 
-<!-- Modal to add new Loket starts-->
+<!-- Modal to add new antrian Starts-->
 <div class="scrolling-inside-modal">
     <!-- Modal -->
     <div class="modal fade" id="exampleModalScrollable" tabindex="-1" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog">
             <form class="modal-content pt-0" method="POST" id="postForm">
                 <div class="modal-header mb-1">
-                    <h5 class="modal-title" id="exampleModalLabel">Tambah @yield('title')</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Pendaftaran Antrian</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body flex-grow-1">
                     <div class="mb-1">
-                        <label class="form-label" for="basic-icon-default-fullname">Nama @yield('title')</label>
-                        <input type="text" class="form-control dt-full-name" id="nama" name="nama" required />
-                    </div>
-                    <div class="mb-1">
-                        <label class="form-label" for="country">Poliklinik</label>
-                        <select class="select2 form-select" name="poli" id="poli">
-                            @foreach ($poli as $p)
-                                <option value="{{ $p->id }}">{{ $p->nama }}</option>
+                        <label class="form-label" for="id_poliklinik"><font style="color: red">*</font> Poliklinik</label>
+                        <select class="select2 form-select" name="id_poliklinik" id="id_poliklinik">
+                            <option value="">Pilih</option>
+                            @foreach ( $poliklinik as $p)
+                            <option value="{{ $p->id }}">{{ $p->nama }}</option>
                             @endforeach
                         </select>
                     </div>
+                    <div class="mb-1">
+                        <label class="form-label" for="tanggal"><font style="color: red">*</font> Tanggal Berobat</label>
+                        <input class="form-control" id="tanggal" type="date" name="tanggal" aria-describedby="tanggal" autofocus="" tabindex="1" required />
+                    </div>
                     <div class="modal-footer">
-                        <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary me-1 data-submit" id="SubmitData">Submit</button>
+                        <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary me-1 data-submit" id="SubmitData">Daftar</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
 </div>
-<!-- Modal to add new Loket Ends-->
-
-
-<!-- Modal to edit Loket starts-->
-<div class="modal fade" id="exampleModalScrollable2" tabindex="-1" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content pt-0">
-            <div class="modal-header mb-1">
-                <h5 class="modal-title" id="exampleModalLabel">Edit @yield('title')</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body flex-grow-1">
-                <div id="EditModal">
-
-                </div>
-                <div class="modal-footer">
-                    <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary me-1 data-submit" id="UpdateData">Update</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Modal to edit Loket Ends-->
+<!-- Modal to add new antrian Ends-->
 </section>
-<!-- Loket ends -->
+<!-- Konsultasi Ends -->
 @endsection
 
 @section('vendor-script')
@@ -140,7 +119,6 @@
 <script src="{{ asset(mix('vendors/js/forms/cleave/addons/cleave-phone.us.js')) }}"></script>
 <script src="{{ asset(mix('vendors/js/extensions/toastr.min.js')) }}"></script>
 <script src="{{ asset(mix('vendors/js/extensions/sweetalert2.all.min.js')) }}"></script>
-<script src="{{ asset(mix('vendors/js/extensions/polyfill.min.js')) }}"></script>
 @endsection
 
 @section('page-script')
@@ -168,7 +146,7 @@
             processing: true,
             serverSide: true,
             dom: '<"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
-            ajax: "{{ url('loket') }}",
+            ajax: "{{ url('antrian') }}",
             language: {
                 paginate: {
                     // remove previous & next text from pagination
@@ -181,21 +159,24 @@
                     name: 'DT_RowIndex'
                 },
                 {
-                    data: 'aksi',
-                    name: 'aksi',
-                    sClass: 'text-center'
-                },
-                {
-                    data: 'id',
-                    name: 'id'
+                    data: 'no_ktp',
+                    name: 'no_ktp'
                 },
                 {
                     data: 'nama',
                     name: 'nama'
                 },
                 {
+                    data: 'tanggal',
+                    name: 'tanggal'
+                },
+                {
                     data: 'poliklinik',
                     name: 'poliklinik'
+                },
+                {
+                    data: 'no_antrian',
+                    name: 'no_antrian'
                 }
             ]
         });
@@ -210,11 +191,11 @@
                 }
             });
             $.ajax({
-                url: "{{ route('loket.store') }}",
+                url: "{{ route('antrian.store') }}",
                 method: 'post',
                 data: {
-                    nama: $('#nama').val(),
-                    poli: $('#poli').val()
+                    id_poliklinik: $('#id_poliklinik').val(),
+                    tanggal: $('#tanggal').val()
                 },
                 success: function (result) {
                     if (result.errors) {
@@ -230,100 +211,6 @@
                 }
             });
         });
-
-        // Get single data in Edit Model
-        $('.btn-close').on('click', function () {
-            $('#exampleModalScrollable2').modal("hide");
-        });
-        $('body').on('click', '#getEditLoket', function (e) {
-            // e.preventDefault();
-            id = $(this).data('id');
-            $.ajax({
-                url: "loket/" + id + "/edit",
-                type: 'GET',
-                // data: {
-                //     id: id,
-                // },
-                success: function (result) {
-                    $('#EditModal').html(result.html);
-                    $('#exampleModalScrollable2').modal("show");
-                }
-            });
-        });
-
-        // Update data Ajax request.
-        $('#UpdateData').click(function (e) {
-            e.preventDefault();
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: "loket/" + id,
-                method: 'PUT',
-                data: {
-                    nama: $('#editnama').val(),
-                    poli: $('#editpoli').val()
-                },
-                success: function (result) {
-                    if (result.errors) {
-                        $.each(result.errors, function (key, value) {
-                            toastr.error(result.errors);
-                        });
-                    } else {
-                        $('#exampleModalScrollable2').modal('hide');
-                        toastr.success(result.success);
-                        $('.datatable').DataTable().ajax.reload();
-                    }
-                }
-            });
-        });
-
-        // Delete data Ajax request.
-        $(document).on('click', '#getDeleteLoket', function (e) {
-            e.preventDefault();
-            var id = $(this).data('id');
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            const url = $(this).attr('href');
-            Swal.fire({
-                title: 'Apakah anda yakin akan menghapus data ini?',
-                // text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Ya, hapus data',
-                customClass: {
-                    confirmButton: 'btn btn-primary',
-                    cancelButton: 'btn btn-outline-danger ms-1'
-                },
-                buttonsStyling: false
-            }).then(function (result) {
-                if (result.value) {
-                    $.ajax({
-                        data: {
-                            id: id
-                        },
-                        url: "loket/" + id,
-                        method: 'DELETE',
-                        success: function (result) {
-                            Swal.fire({
-                                icon: 'success',
-                                // text: 'Dihapus!',
-                                title: result.success,
-                                customClass: {
-                                    confirmButton: 'btn btn-success'
-                                }
-                            });
-                            $('.datatable').DataTable().ajax.reload();
-                        }
-                    });
-                }
-            });
-        })
     });
 
 </script>

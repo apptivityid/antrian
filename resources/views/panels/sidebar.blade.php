@@ -58,9 +58,20 @@ $configData = Helper::applClasses();
     <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
       {{-- Foreach menu item starts --}}
         <li class="{{ request()->is('dashboard') ? 'active' : '' }} nav-item"><a class="d-flex align-items-center" href="{{url('dashboard')}}"><i data-feather="home"></i><span class="menu-title text-truncate" data-i18n="grup">Beranda</span></a></li>
+        @if (Auth::user()->level == "admin")
+        <li class="{{ request()->is('poli') ? 'active' : '' }} nav-item"><a class="d-flex align-items-center" href="{{url('poli')}}"><i data-feather="aperture"></i><span class="menu-title text-truncate" data-i18n="grup">Poliklinik</span></a></li>
         <li class="{{ request()->is('loket') ? 'active' : '' }} nav-item"><a class="d-flex align-items-center" href="{{url('loket')}}"><i data-feather="monitor"></i><span class="menu-title text-truncate" data-i18n="grup">Loket</span></a></li>
         <li class="{{ request()->is('dokter') ? 'active' : '' }} nav-item"><a class="d-flex align-items-center" href="{{url('dokter')}}"><i data-feather="slack"></i><span class="menu-title text-truncate" data-i18n="grup">Dokter</span></a></li>
-        <li class="{{ request()->is('pasien') ? 'active' : '' }} nav-item"><a class="d-flex align-items-center" href="{{url('pasien')}}"><i data-feather="users"></i><span class="menu-title text-truncate" data-i18n="grup">Pasien</span></a></li>
+        <li class="{{ request()->is('pasien') ? 'active' : '' }} nav-item"><a class="d-flex align-items-center" href="{{url('pasien')}}"><i data-feather="user"></i><span class="menu-title text-truncate" data-i18n="grup">Pasien</span></a></li>
+        <li class="{{ request()->is('user') ? 'active' : '' }} nav-item"><a class="d-flex align-items-center" href="{{url('user')}}"><i data-feather="users"></i><span class="menu-title text-truncate" data-i18n="grup">Pengguna</span></a></li>
+        <li class="{{ request()->is('antrian') ? 'active' : '' }} nav-item"><a class="d-flex align-items-center" href="{{url('antrian')}}"><i data-feather="octagon"></i><span class="menu-title text-truncate" data-i18n="grup">Antrian</span></a></li>
+        @endif
+        @if (Auth::user()->level == "admin" or Auth::user()->level == "dokter")
+        <li class="{{ request()->is('konsultasi') ? 'active' : '' }} nav-item"><a class="d-flex align-items-center" href="{{url('konsultasi')}}"><i data-feather="clipboard"></i><span class="menu-title text-truncate" data-i18n="grup">Konsultasi</span></a></li>
+        @endif
+        @if (Auth::user()->level == "pasien")
+        <li class="{{ request()->is('antrian-pasien') ? 'active' : '' }} nav-item"><a class="d-flex align-items-center" href="{{url('antrian-pasien')}}"><i data-feather="octagon"></i><span class="menu-title text-truncate" data-i18n="grup">Pendaftaran</span></a></li>
+        @endif
         {{-- <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="sun"></i><span class="menu-title text-truncate" data-i18n="Master">Master</span></a>
             <ul class="menu-content">
                 <li class="{{ request()->is('master/grup/perusahaan') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{url('master/grup/perusahaan')}}"><i data-feather="database"></i><span class="menu-title text-truncate" data-i18n="Grup Perusahaan">Grup Perusahaan</span></a>

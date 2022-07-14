@@ -58,7 +58,7 @@
                 </ul>
                 <ul class="nav navbar-nav">
                     <li class="nav-item d-none d-lg-block">
-                        Selamat Datang di Dashboard
+                        Sistem Informasi Antrian by Apptivity.id
                         {{-- <div class="bookmark-input search-input">
                             <div class="bookmark-input-icon">
                                 <i data-feather="search"></i>
@@ -96,8 +96,8 @@
                                 John Doe
                                 @endif
                             </span>
-                            <span class="user-status">
-                                Admin
+                            <span class="user-status" style="text-transform:capitalize">
+                                {{ Auth::user()->level }}
                             </span>
                         </div>
                         <span class="avatar">

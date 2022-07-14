@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\IsAdminMiddleware;
+use App\Http\Middleware\IsDokterMiddleware;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AppsController;
@@ -26,6 +28,10 @@ use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\LoketController;
 use App\Http\Controllers\DokterController;
 use App\Http\Controllers\PasienController;
+use App\Http\Controllers\PoliController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\KonsultasiController;
+use App\Http\Controllers\AntrianController;
 use App\Models\Perusahaan;
 
 /*
@@ -63,26 +69,52 @@ Route::group(['prefix' => 'auth'], function () {
 });
 /* Route Authentication Pages */
 Route::group(['middleware' => 'auth'], function () {
+    Route::get('dashboard/PanggilAntrian/{id}/{id_poli}', [DashboardController::class, 'PanggilAntrian']);
     Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     // Route::get('register-cover', [AuthenticationController::class, 'register_cover'])->name('auth-register-cover');
 
+    /* Route Poli Start*/
+        Route::resource('poli', PoliController::class);
+        Route::get('poli', [PoliController::class, 'index'])->middleware(IsAdminMiddleware::class)->name('master-poli');
+
+    /* Route Poli End*/
+
+    /* Route User Start*/
+        Route::resource('user', UserController::class);
+        Route::get('user', [UserController::class, 'index'])->middleware(IsAdminMiddleware::class)->name('master-user');
+
+    /* Route User End*/
+
     /* Route Loket Start*/
         Route::resource('loket', LoketController::class);
-        Route::get('loket', [LoketController::class, 'index'])->name('master-loket');
+        Route::get('loket', [LoketController::class, 'index'])->middleware(IsAdminMiddleware::class)->name('master-loket');
 
     /* Route Loket End*/
 
     /* Route Dokter Start*/
         Route::resource('dokter', DokterController::class);
-        Route::get('dokter', [DokterController::class, 'index'])->name('master-dokter');
+        Route::get('dokter', [DokterController::class, 'index'])->middleware(IsAdminMiddleware::class)->name('master-dokter');
 
     /* Route Dokter End*/
 
     /* Route Pasien Start*/
         Route::resource('pasien', PasienController::class);
-        Route::get('pasien', [PasienController::class, 'index'])->name('master-pasien');
+        Route::get('pasien', [PasienController::class, 'index'])->middleware(IsAdminMiddleware::class)->name('master-pasien');
 
     /* Route Pasien End*/
+
+    /* Route Konsultasi Start*/
+        Route::resource('konsultasi', KonsultasiController::class);
+        Route::get('konsultasi', [KonsultasiController::class, 'index'])->middleware(IsDokterMiddleware::class)->name('master-konsultasi');
+
+    /* Route Konsultasi End*/
+
+    /* Route Antrian Start*/
+        Route::resource('antrian', AntrianController::class);
+        Route::get('antrian', [AntrianController::class, 'index'])->name('master-antrian');
+        Route::get('antrian-pasien', [AntrianController::class, 'pasien'])->name('antrian-pasien');
+
+    /* Route Antrian End*/
 
     /* Route Master */
     Route::group(['prefix' => 'master'], function () {

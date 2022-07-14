@@ -25,11 +25,16 @@ DROP TABLE IF EXISTS `antrian`;
 CREATE TABLE `antrian` (
   `id` int(15) NOT NULL AUTO_INCREMENT,
   `id_pasien` int(5) NOT NULL,
-  `id_dokter` int(5) NOT NULL,
+  `id_poliklinik` int(15) NOT NULL,
   `no_antrian` varchar(15) NOT NULL,
-  `tanggal` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `tanggal` date NOT NULL,
+  `created_by` varchar(30) NOT NULL,
+  `updated_by` varchar(30) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `ip_address` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,6 +43,7 @@ CREATE TABLE `antrian` (
 
 LOCK TABLES `antrian` WRITE;
 /*!40000 ALTER TABLE `antrian` DISABLE KEYS */;
+INSERT INTO `antrian` VALUES (4,2,1,'1','2022-07-14','h','h','2022-07-14 05:27:52','2022-07-14 05:27:52','h');
 /*!40000 ALTER TABLE `antrian` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -109,7 +115,7 @@ CREATE TABLE `dokter` (
   `ip_address` varchar(20) NOT NULL,
   `email` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -118,6 +124,7 @@ CREATE TABLE `dokter` (
 
 LOCK TABLES `dokter` WRITE;
 /*!40000 ALTER TABLE `dokter` DISABLE KEYS */;
+INSERT INTO `dokter` VALUES (6,'Lawson','Spiritual','Jl. Buntu','0855526222222','2022-07-12 19:51:41','2022-07-13 16:42:45','admin','admin','::1','lawson@example.com');
 /*!40000 ALTER TABLE `dokter` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -151,6 +158,38 @@ LOCK TABLES `failed_jobs` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `konsultasi`
+--
+
+DROP TABLE IF EXISTS `konsultasi`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `konsultasi` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_pasien` int(11) NOT NULL,
+  `tanggal` date NOT NULL,
+  `keterangan` text NOT NULL,
+  `resep` text NOT NULL,
+  `created_by` varchar(30) NOT NULL,
+  `updated_by` varchar(30) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `ip_address` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `konsultasi`
+--
+
+LOCK TABLES `konsultasi` WRITE;
+/*!40000 ALTER TABLE `konsultasi` DISABLE KEYS */;
+INSERT INTO `konsultasi` VALUES (1,2,'2022-07-13','Test :\n- lsa1\n- f2\n- ggg3','Test :\n- obaaa1\n- fsdd2\n- gggsdfsdf3','lawson','lawson','2022-07-13 18:10:41','2022-07-13 18:18:11','::1');
+/*!40000 ALTER TABLE `konsultasi` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `loket`
 --
 
@@ -160,14 +199,15 @@ DROP TABLE IF EXISTS `loket`;
 CREATE TABLE `loket` (
   `id` int(15) NOT NULL AUTO_INCREMENT,
   `nama` varchar(30) NOT NULL,
-  `nomor` varchar(5) NOT NULL,
+  `nomor` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_by` varchar(30) NOT NULL,
   `updated_by` varchar(30) NOT NULL,
   `ip_address` varchar(20) NOT NULL,
+  `id_poli` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -176,7 +216,7 @@ CREATE TABLE `loket` (
 
 LOCK TABLES `loket` WRITE;
 /*!40000 ALTER TABLE `loket` DISABLE KEYS */;
-INSERT INTO `loket` VALUES (1,'Loket 1','0','2022-07-06 17:25:07','2022-07-06 17:25:07','hendry','hendry','::1'),(2,'Loket 2','0','2022-07-06 17:25:19','2022-07-06 17:25:19','hendry','hendry','::1'),(3,'Loket 3','0','2022-07-06 17:25:24','2022-07-06 17:25:24','hendry','hendry','::1');
+INSERT INTO `loket` VALUES (1,'Loket 1',1,'2022-07-06 17:25:07','2022-07-12 20:26:08','hendry','hendry','::1',1),(2,'Loket 2',3,'2022-07-06 17:25:19','2022-07-12 20:26:18','hendry','admin','::1',2),(4,'Loket 1',1,'2022-07-12 16:36:12','2022-07-12 20:26:10','admin','admin','::1',2),(5,'Loket 2',2,'2022-07-12 16:38:17','2022-07-12 20:26:13','admin','admin','::1',1),(6,'Loket 3',4,'2022-07-12 16:42:25','2022-07-12 20:26:16','admin','admin','::1',1);
 /*!40000 ALTER TABLE `loket` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -233,7 +273,7 @@ CREATE TABLE `pasien` (
   `ip_address` varchar(20) NOT NULL,
   `email` varchar(30) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -242,6 +282,7 @@ CREATE TABLE `pasien` (
 
 LOCK TABLES `pasien` WRITE;
 /*!40000 ALTER TABLE `pasien` DISABLE KEYS */;
+INSERT INTO `pasien` VALUES (2,'Lawson','PASAR MAGA','2022-07-14',26,'Laki-laki','Jl. Buntu','SS','SSSSSS','0855526222222','Test trigger','lawson1','123334','2022-07-13 18:08:48','2022-07-13 18:08:48','admin','admin','::1','lawson1@xample.com');
 /*!40000 ALTER TABLE `pasien` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -302,6 +343,35 @@ LOCK TABLES `personal_access_tokens` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `poli`
+--
+
+DROP TABLE IF EXISTS `poli`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `poli` (
+  `id` int(15) NOT NULL AUTO_INCREMENT,
+  `nama` varchar(30) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` varchar(30) NOT NULL,
+  `updated_by` varchar(30) NOT NULL,
+  `ip_address` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `poli`
+--
+
+LOCK TABLES `poli` WRITE;
+/*!40000 ALTER TABLE `poli` DISABLE KEYS */;
+INSERT INTO `poli` VALUES (1,'Penyakit Dalam','2022-07-12 16:00:47','2022-07-12 16:00:47','admin','admin','::1'),(2,'Bedah Umum','2022-07-12 16:00:58','2022-07-12 16:00:58','admin','admin','::1'),(3,'Mata','2022-07-12 16:01:07','2022-07-12 16:01:07','admin','admin','::1');
+/*!40000 ALTER TABLE `poli` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `sessions`
 --
 
@@ -352,7 +422,7 @@ CREATE TABLE `users` (
   `level` varchar(6) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -361,7 +431,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'admin','admin@gmail.com',NULL,'$2y$10$lXRtXtXKUJfbtCmpFzSn/.Ev7RYKcfkGURiGf9/4kAMo3/INX7Svi',NULL,'2022-07-04 19:16:06','2022-07-04 19:16:06','user','user','::1','admin');
+INSERT INTO `users` VALUES (1,'admin','admin@gmail.com',NULL,'$2y$10$lXRtXtXKUJfbtCmpFzSn/.Ev7RYKcfkGURiGf9/4kAMo3/INX7Svi',NULL,'2022-07-04 19:16:06','2022-07-04 19:16:06','user','user','::1','admin'),(5,'lawson','lawson@example.com',NULL,'$2y$10$IJursqkyUyYmeVbSWdYeKuqQs0TOVetj2SHPqLEYuwcHYXlcmauH6',NULL,'2022-07-12 19:51:41','2022-07-13 16:43:02','admin','admin','::1','dokter'),(8,'lawson1','lawson1@xample.com',NULL,'$2y$10$W6lfOu6NNsEYNB/rUMQ6Gu/3sGNp8lPHXu..bP10usGtYjw0QsPqy',NULL,'2022-07-13 18:08:48','2022-07-13 18:08:48','admin','admin','::1','pasien');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -378,4 +448,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-07-07 11:09:35
+-- Dump completed on 2022-07-14 13:19:42

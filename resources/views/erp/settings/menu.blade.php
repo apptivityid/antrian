@@ -66,7 +66,7 @@
     <div class="card">
         <div class="card-body border-bottom">
             <h4 class="card-title">List Data</h4>
-            <div class="button" align="right">
+            <div class="button">
                 <button class="add-new btn btn-primary" data-bs-toggle="modal" data-bs-target='#modals-slide-in'>
                 <i data-feather="plus-circle" class="me-25"></i>
                 <span>Tambah Data</span>

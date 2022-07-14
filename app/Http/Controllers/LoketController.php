@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Loket;
+use App\Models\Poli;
 use Illuminate\Http\Request;
 use DataTables;
 use Illuminate\Support\Facades\Auth;
@@ -15,11 +16,13 @@ class LoketController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, Loket $loket)
+    public function index(Request $request, Loket $loket, Poli $poli)
     {
         $breadcrumbs = [
             ['link' => "/", 'name' => "Home"], ['name' => "Loket"]
         ];
+
+        $poli = $poli->getData();
 
         if ($request->ajax()) {
             $data = $loket->getData();
@@ -33,7 +36,8 @@ class LoketController extends Controller
                 ->make(true);
         }
         return view('/erp/loket/index', [
-            'breadcrumbs' => $breadcrumbs
+            'breadcrumbs' => $breadcrumbs,
+            'poli' => $poli
         ]);
     }
 
@@ -56,7 +60,8 @@ class LoketController extends Controller
     public function store(Request $request, Loket $loket)
     {
         $validator = \Validator::make($request->all(), [
-            'nama' => 'required'
+            'nama' => 'required',
+            'poli' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -65,6 +70,7 @@ class LoketController extends Controller
 
         $data = array(
             'nama'          => $request->input('nama'),
+            'id_poli'       => $request->input('poli'),
             'nomor'         => 0,
             'created_by'    => Auth::user()->name,
             'updated_by'    => Auth::user()->name,
@@ -95,13 +101,23 @@ class LoketController extends Controller
      */
     public function edit($id)
     {
-        $loket = new Loket;
-        $data = $loket->findData($id);
+        $loket      = new Loket;
+        $data       = $loket->findData($id);
+        $poli       = new Poli;
+        $poliklinik = $poli->getData();
 
         $html = '<div class="mb-1">
                     <label class="form-label" for="basic-icon-default-fullname">Nama</label>
                     <input type="text" class="form-control dt-full-name" id="editnama"
                         name="nama" value="'.$data->nama.'" />
+                </div>
+                <div class="mb-1">
+                    <label class="form-label" for="poli">Poliklinik</label>
+                    <select class="select2 form-select" name="poli" id="editpoli">';
+                        foreach ($poliklinik as $p){
+                            $html .= '<option value="'.$p->id.'"'.($data->id_poli == $p->id ? ' selected' : '').'>'.$p->nama.'</option>';
+                        }
+        $html .= '  </select>
                 </div>';
 
         return response()->json(['html'=>$html]);
@@ -126,6 +142,7 @@ class LoketController extends Controller
 
         $data = array(
             'nama'          => $request->input('nama'),
+            'id_poli'       => $request->input('poli'),
             'updated_by'    => Auth::user()->name,
             'ip_address'    => $request->ip()
         );

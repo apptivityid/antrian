@@ -64,7 +64,7 @@ class AuthenticationController extends Controller
         return redirect()->back()
             ->withInput()
             ->withErrors([
-                'username' => 'Nama pengguna atau email tidak ditemukan.',
+                'username' => 'Nama pengguna, email atau kata sandi salah.'
             ]);
     }
 

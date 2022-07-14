@@ -23,7 +23,7 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 
 @section('content')
-<!-- pasien start -->
+<!-- User start -->
 <!-- list and filter start -->
 <div class="card">
     <div class="card-body border-bottom">
@@ -46,13 +46,9 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Aksi</th>
-                                    <th>No. KTP</th>
-                                    <th>Nama</th>
-                                    <th>Jenis Kelamin</th>
-                                    <th>Nama Orang tua</th>
-                                    <th>Alamat</th>
-                                    <th>No. Telp</th>
+                                    <th>Nama Pengguna</th>
                                     <th>Email</th>
+                                    <th>Level</th>
                                 </tr>
                             </thead>
                         </table>
@@ -65,7 +61,7 @@
 </div>
 <!-- list and filter end -->
 
-<!-- Modal to add new pasien starts-->
+<!-- Modal to add new User starts-->
 <div class="scrolling-inside-modal">
     <!-- Modal -->
     <div class="modal fade" id="exampleModalScrollable" tabindex="-1" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
@@ -77,57 +73,16 @@
                 </div>
                 <div class="modal-body flex-grow-1">
                     <div class="mb-1">
-                        <label class="form-label" for="no_ktp"><font style="color: red">*</font> No. KTP</label>
-                        <input class="form-control" id="no_ktp" type="text" name="no_ktp" aria-describedby="no_ktp" autofocus="" tabindex="1" required />
+                        <label class="form-label" for="name"><font style="color: red">*</font> Nama Pengguna</label>
+                        <input class="form-control" id="name" type="text" name="name" aria-describedby="name" autofocus="" tabindex="1" required />
                     </div>
                     <div class="mb-1">
-                        <label class="form-label" for="nama"><font style="color: red">*</font> Nama</label>
-                        <input class="form-control" id="nama" type="text" name="nama"
-                            placeholder="John Doe" aria-describedby="nama" autofocus="" tabindex="1" required />
-                    </div>
-                    <div class="mb-1">
-                        <label class="form-label" for="tempat_lahir"><font style="color: red">*</font> Tempat Lahir</label>
-                        <input class="form-control" id="tempat_lahir" type="text" name="tempat_lahir" aria-describedby="tempat_lahir" autofocus="" tabindex="1" required />
-                    </div>
-                    <div class="mb-1">
-                        <label class="form-label" for="tgl_lahir"><font style="color: red">*</font> Tanggal Lahir</label>
-                        <input class="form-control" id="tgl_lahir" type="date" name="tgl_lahir" aria-describedby="tgl_lahir" autofocus="" tabindex="1" required />
-                    </div>
-                    <div class="mb-1">
-                        <label class="form-label" for="umur">Umur</label>
-                        <input class="form-control" id="umur" type="number" name="umur" aria-describedby="umur" autofocus="" tabindex="1" />
-                    </div>
-                    <div class="mb-1">
-                        <label class="form-label" for="jenis_kelamin"><font style="color: red">*</font> Jenis Kelamin</label>
-                        <select class="form-control" name="jenis_kelamin" id="jenis_kelamin">
-                            <option value="Laki-laki">Laki-laki</option>
-                            <option value="Perempuan">Perempuan</option>
+                        <label class="form-label" for="level"><font style="color: red">*</font> Level</label>
+                        <select class="form-control" name="level" id="level">
+                            <option value="admin">Admin</option>
+                            <option value="dokter">Dokter</option>
+                            <option value="User">User</option>
                         </select>
-                    </div>
-                    <div class="mb-1">
-                        <label class="form-label" for="alamat">Alamat</label>
-                        <input class="form-control" id="alamat" type="text" name="alamat" aria-describedby="alamat" autofocus="" tabindex="1" />
-                    </div>
-                    <div class="mb-1">
-                        <label class="form-label" for="pekerjaan">Pekerjaan</label>
-                        <input class="form-control" id="pekerjaan" type="text" name="pekerjaan" aria-describedby="pekerjaan" autofocus="" tabindex="1" />
-                    </div>
-                    <div class="mb-1">
-                        <label class="form-label" for="nama_ortu"><font style="color: red">*</font> Nama Orangtua</label>
-                        <input class="form-control" id="nama_ortu" type="text" name="nama_ortu" aria-describedby="nama_ortu" autofocus="" tabindex="1" required />
-                    </div>
-                    <div class="mb-1">
-                        <label class="form-label" for="no_telp"><font style="color: red">*</font> Nomor Hp/Telepon</label>
-                        <input class="form-control" id="no_telp" type="text" name="no_telp" aria-describedby="no_telp" autofocus="" tabindex="1" required />
-                    </div>
-                    <div class="mb-1">
-                        <label class="form-label" for="keterangan">Keterangan</label>
-                        <input class="form-control" id="keterangan" type="text" name="keterangan" aria-describedby="keterangan" autofocus="" tabindex="1" />
-                    </div>
-                    <div class="mb-1">
-                        <label class="form-label" for="username"><font style="color: red">*</font> Nama Pengguna</label>
-                        <input class="form-control" id="username" type="text" name="username"
-                            placeholder="johndoe" aria-describedby="username" autofocus="" tabindex="1" required />
                     </div>
                     <div class="mb-1">
                         <label class="form-label" for="email"><font style="color: red">*</font> Email</label>
@@ -152,10 +107,10 @@
         </div>
     </div>
 </div>
-<!-- Modal to add new pasien Ends-->
+<!-- Modal to add new User Ends-->
 
 
-<!-- Modal to edit pasien starts-->
+<!-- Modal to edit User starts-->
 <div class="modal fade" id="exampleModalScrollable2" tabindex="-1" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content pt-0">
@@ -175,9 +130,9 @@
         </div>
     </div>
 </div>
-<!-- Modal to edit pasien Ends-->
+<!-- Modal to edit User Ends-->
 </section>
-<!-- pasien ends -->
+<!-- User ends -->
 @endsection
 
 @section('vendor-script')
@@ -227,7 +182,7 @@
             processing: true,
             serverSide: true,
             dom: '<"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
-            ajax: "{{ url('pasien') }}",
+            ajax: "{{ url('user') }}",
             language: {
                 paginate: {
                     // remove previous & next text from pagination
@@ -245,32 +200,16 @@
                     sClass: 'text-center'
                 },
                 {
-                    data: 'no_ktp',
-                    name: 'no_ktp'
-                },
-                {
-                    data: 'nama',
-                    name: 'nama'
-                },
-                {
-                    data: 'jenis_kelamin',
-                    name: 'jenis_kelamin'
-                },
-                {
-                    data: 'nama_ortu',
-                    name: 'nama_ortu'
-                },
-                {
-                    data: 'alamat',
-                    name: 'alamat'
-                },
-                {
-                    data: 'no_telp',
-                    name: 'no_telp'
+                    data: 'name',
+                    name: 'name'
                 },
                 {
                     data: 'email',
                     name: 'email'
+                },
+                {
+                    data: 'level',
+                    name: 'level'
                 }
             ]
         });
@@ -285,21 +224,11 @@
                 }
             });
             $.ajax({
-                url: "{{ route('pasien.store') }}",
+                url: "{{ route('user.store') }}",
                 method: 'post',
                 data: {
-                    nama: $('#nama').val(),
-                    tempat_lahir: $('#tempat_lahir').val(),
-                    tgl_lahir: $('#tgl_lahir').val(),
-                    umur: $('#umur').val(),
-                    jenis_kelamin: $('#jenis_kelamin').val(),
-                    alamat: $('#alamat').val(),
-                    pekerjaan: $('#pekerjaan').val(),
-                    nama_ortu: $('#nama_ortu').val(),
-                    no_telp: $('#no_telp').val(),
-                    keterangan: $('#keterangan').val(),
-                    no_ktp: $('#no_ktp').val(),
-                    nama_pengguna: $('#username').val(),
+                    name: $('#name').val(),
+                    level: $('#level').val(),
                     password: $('#password').val(),
                     email: $('#email').val()
                 },
@@ -322,11 +251,11 @@
         $('.btn-close').on('click', function () {
             $('#exampleModalScrollable2').modal("hide");
         });
-        $('body').on('click', '#getEditPasien', function (e) {
+        $('body').on('click', '#getEditUser', function (e) {
             // e.preventDefault();
             id = $(this).data('id');
             $.ajax({
-                url: "pasien/" + id + "/edit",
+                url: "user/" + id + "/edit",
                 type: 'GET',
                 // data: {
                 //     id: id,
@@ -347,21 +276,11 @@
                 }
             });
             $.ajax({
-                url: "pasien/" + id,
+                url: "user/" + id,
                 method: 'PUT',
                 data: {
-                    nama: $('#editnama').val(),
-                    tempat_lahir: $('#edittempat_lahir').val(),
-                    tgl_lahir: $('#edittgl_lahir').val(),
-                    umur: $('#editumur').val(),
-                    jenis_kelamin: $('#editjenis_kelamin').val(),
-                    alamat: $('#editalamat').val(),
-                    pekerjaan: $('#editpekerjaan').val(),
-                    nama_ortu: $('#editnama_ortu').val(),
-                    no_telp: $('#editno_telp').val(),
-                    keterangan: $('#editketerangan').val(),
-                    no_ktp: $('#editno_ktp').val(),
-                    nama_pengguna: $('#editusername').val(),
+                    name: $('#editname').val(),
+                    level: $('#editlevel').val(),
                     password: $('#editpassword').val(),
                     email: $('#editemail').val()
                 },
@@ -380,7 +299,7 @@
         });
 
         // Delete data Ajax request.
-        $(document).on('click', '#getDeletePasien', function (e) {
+        $(document).on('click', '#getDeleteUser', function (e) {
             e.preventDefault();
             var id = $(this).data('id');
             $.ajaxSetup({
@@ -406,7 +325,7 @@
                         data: {
                             id: id
                         },
-                        url: "pasien/" + id,
+                        url: "user/" + id,
                         method: 'DELETE',
                         success: function (result) {
                             Swal.fire({
