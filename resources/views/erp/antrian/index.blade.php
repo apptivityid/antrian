@@ -134,8 +134,8 @@
                     name: 'poliklinik'
                 },
                 {
-                    data: 'nomor',
-                    name: 'nomor'
+                    data: 'no_antrian',
+                    name: 'no_antrian'
                 }
             ]
         });

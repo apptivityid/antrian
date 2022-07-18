@@ -7,6 +7,7 @@ use App\Models\Antrian;
 use App\Models\Poli;
 use Illuminate\Http\Request;
 use DataTables;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class AntrianController extends Controller
@@ -81,16 +82,17 @@ class AntrianController extends Controller
         }
 
         $pasien = $antrian->getDataPasien(Auth::user()->name);
-        $nomor = $antrian->getNomor();
-
-        if($nomor->no_antrian === NULL){
-            $n = 0;
-        }else{
-            $n = $nomor->no_antrian;
-        }
+        $nomor = DB::table('antrian')
+                    ->select(DB::raw('MAX(no_antrian) AS no_antrian'))
+                    ->where([
+                        ['id_poliklinik', '=', $request->input('id_poliklinik')],
+                        ['tanggal', '=', $request->input('tanggal')]
+                     ])
+                    ->first();
+        $n = $nomor->no_antrian;
 
         $data = array(
-            'id_pasien'     => $pasien,
+            'id_pasien'     => $pasien->id_pasien,
             'tanggal'       => $request->input('tanggal'),
             'id_poliklinik' => $request->input('id_poliklinik'),
             'no_antrian'    => $n + 1,

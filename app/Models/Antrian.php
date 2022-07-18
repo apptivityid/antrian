@@ -15,29 +15,17 @@ class Antrian extends Model
         'id_pasien',
         'tanggal',
         'id_poliklinik',
+        'no_antrian',
         'created_by',
         'updated_by',
         'ip_address'
     ];
 
-    public function getNomor()
-    {
-        // return static::where([
-        //                 ['id_poliklinik', '=', $poli],
-        //                 ['tanggal', '=', $tanggal]
-        //              ])
-        //              ->select('no_antrian')
-        //              ->first()
-        //              ->no_urutan ?? 0;
-        return static::orderBy('no_antrian', 'desc')
-                     ->first();
-    }
-
     public function getDataPasien($name)
     {
         return DB::table('users')
                         ->join('pasien', 'pasien.nama_pengguna', '=', 'users.name')
-                        ->select('pasien.id')
+                        ->select('pasien.id AS id_pasien')
                         ->where('users.name', $name)
                         ->first();
     }
@@ -48,6 +36,8 @@ class Antrian extends Model
                         ->join('poli', 'poli.id', '=', 'antrian.id_poliklinik')
                         ->select('antrian.id', 'antrian.id_pasien', 'antrian.no_antrian', 'antrian.tanggal', 'pasien.nama', 'pasien.no_ktp', 'poli.nama AS poliklinik')
                         ->orderBy('antrian.tanggal','desc')
+                        ->orderBy('antrian.id_poliklinik','desc')
+                        ->orderBy('antrian.no_antrian','desc')
                         ->get();
     }
 

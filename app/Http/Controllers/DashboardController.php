@@ -31,9 +31,12 @@ class DashboardController extends Controller
 
   public function PanggilAntrian($id, $id_poli)
   {
+    $pageConfigs = ['pageHeader' => false];
     $loket = new Loket;
     $loket->updateNomor($id, $id_poli);
+    $lok = $loket->getData();
 
-    return redirect()->route('dashboard')->with([ 'idloket' => $id ]);
+    // return redirect()->route('dashboard')->with([ 'idloket' => $id ]);
+    return view('/content/dashboard/dashboard-ecommerce', ['pageConfigs' => $pageConfigs, 'loket' => $lok]);
   }
 }
